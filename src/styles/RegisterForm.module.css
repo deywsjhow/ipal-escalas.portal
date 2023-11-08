@@ -1,0 +1,35 @@
+
+.input_group{
+    @apply flex border rounded-xl;
+    position: relative;
+    background-color: white;
+    height: 35px;
+}
+
+.input_text{
+    @apply w-full py-4 px-6 border rounded-xl bg-slate-50;
+    @apply focus:outline-none border-none;
+}
+
+.button{
+    @apply w-full bg-blue-900 rounded-xl;
+    @apply py-3 text-gray-50 text-lg;
+}
+
+.button:hover{
+    @apply bg-blue-900/75 border-blue-500;
+}
+
+.input_text + *{
+    color: #CBD5E1;
+    cursor: pointer
+}
+
+.input_text:focus + *{
+    color: #6366f1;
+}
+
+.input_text:not([type=text]) ~ span:hover *{
+    color: #6366f1;
+    cursor: pointer
+}
