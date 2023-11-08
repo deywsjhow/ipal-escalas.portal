@@ -1,7 +1,7 @@
 import Head from "next/head"
 import Link from "next/link"
 import { useState } from "react"
-import { useRouter } from "next/router"
+import route from "next/router"
 
 
 import { useFormik } from "formik"
@@ -32,7 +32,6 @@ export default function Login(){
       }
 
     const [showValue, setShowValue] = useState(false)
-    const router = useRouter()
 
     const formik = useFormik({
         initialValues:{
@@ -49,17 +48,16 @@ export default function Login(){
             password: values['password']
         }
 
-        const res = await Authenticate(auth)
+        const res = await Authenticate(auth);
 
         if(!res.success){
             toast.error(res?.errors[0]?.description)
-            router.push('/login')
+            route.push('/login')
         }
 
         const authValue: AuthResponse = res.result        
         window.sessionStorage.setItem('auth', btoa(JSON.stringify(authValue)))
-        router.push('/home')       
-        
+        route.push('/home')     
     }
     
     return(     

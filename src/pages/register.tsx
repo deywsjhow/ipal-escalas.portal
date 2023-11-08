@@ -8,6 +8,9 @@ import { useFormik } from "formik"
 import AuthLayout from "@/layout/authLayout";
 import style from "../styles/RegisterForm.module.css"
 import { RegisterValidate }  from "../lib/validate";
+import { UserRegister } from "./api/auth";
+import toast from "react-hot-toast";
+import router from "next/router";
 
 export default function Register(){
 
@@ -28,7 +31,25 @@ export default function Register(){
 
     
     async function onSubmit(values: any){
-     
+        const reg ={
+            user: values['user'],
+            password: values['password'],
+            cpassword: values['cpassword'],
+            email: values['email'],
+            attribuation: values['attribuation']
+        }
+
+        const res = await UserRegister(reg);
+
+        console.log(res)
+
+        if(!res.success){
+            toast.error(res?.errors[0]?.description)
+            router.push('/register')
+        }
+
+        toast.success('Usuário cadastrado com sucesso!!')
+        router.push('/login')
     }
     
     return(     
@@ -41,7 +62,7 @@ export default function Register(){
                     <h1 className="text-white text-4xl font-bold py-4">Registrar</h1>
                 </div>
 
-                <form className="flex flex-col gap-5">
+                <form className="flex flex-col gap-5" onSubmit={formik.handleSubmit}>
                     <div className={style.input_group}>
                         <input 
                         {...formik.getFieldProps('user')} 
