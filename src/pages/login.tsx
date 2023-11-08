@@ -1,16 +1,18 @@
 import Head from "next/head"
 import Link from "next/link"
 import { useState } from "react"
+import { useRouter } from "next/router"
 
 
 import { useFormik } from "formik"
 import {HiOutlineUserCircle, HiFingerPrint} from "react-icons/hi"
+import { toast } from "react-hot-toast"
 
 import AuthLayout from "@/layout/authLayout"
 import style from "../styles/FormAuth.module.css"
 import LoginValidate  from "../lib/validate";
 import { Authenticate } from "./api/auth"
-import { Toaster, toast } from "react-hot-toast"
+
 
 
 
@@ -30,6 +32,7 @@ export default function Login(){
       }
 
     const [showValue, setShowValue] = useState(false)
+    const router = useRouter()
 
     const formik = useFormik({
         initialValues:{
@@ -49,11 +52,14 @@ export default function Login(){
         const res = await Authenticate(auth)
 
         if(!res.success){
-            toast.error(res?.errors[0]?.description)       
+            toast.error(res?.errors[0]?.description)
+            router.push('/login')
         }
 
         const authValue: AuthResponse = res.result        
-        window.sessionStorage.setItem('auth', btoa(JSON.stringify(authValue)))        
+        window.sessionStorage.setItem('auth', btoa(JSON.stringify(authValue)))
+        router.push('/home')       
+        
     }
     
     return(     
