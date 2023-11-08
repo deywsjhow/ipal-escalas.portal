@@ -1,17 +1,4 @@
-type AuthResponse = {
-    errors: [],
-    result: {
-      userId: string,
-      user: string,
-      email: string,
-      attribuation: string,
-      loginType: number,
-      nameType: string,
-      accessToken: string
-    },
-    success: boolean
 
-  }
 
 
   export async function Authenticate(value: any) {
@@ -23,7 +10,7 @@ type AuthResponse = {
       body: JSON.stringify(value),
     })
    
-    const data: AuthResponse = await res.json()
+    const data = await res.json()
    
     return data;
   }

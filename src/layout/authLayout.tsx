@@ -1,9 +1,10 @@
+import { Toaster } from 'react-hot-toast'
 import style from '../styles/AuthLayout.module.css'
 
 
 export default function AuthLayout({children}: any){
     return(
-        <div className="flex h-screen bg-white-900">
+        <div className="flex h-screen bg-white-900">             
             <div className="m-auto bg-slate-50 rounded-md w-3/5 h-3/4 grid lg:grid-cols-2">
                 <div className={style.imgStyle}>
                     <div className={style.logoImg}></div>
@@ -12,9 +13,23 @@ export default function AuthLayout({children}: any){
                     <div className="text-center py-10 ">                    
                         {children}
                     </div> 
+                    <Toaster 
+                        position="top-center"
+                        toastOptions={{
+                            duration: 6000,                          
+                            error: {
+                                duration: 6000,
+                                style: {
+                                    background: 'white',
+                                    color: 'red',
+                                    textAlign: 'left'
+                                }
+                            }
+
+                        }}
+                    />
                 </div>            
-            </div> 
-            
+            </div>            
         </div>     
     )
 }

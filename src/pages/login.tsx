@@ -10,12 +10,24 @@ import AuthLayout from "@/layout/authLayout"
 import style from "../styles/FormAuth.module.css"
 import LoginValidate  from "../lib/validate";
 import { Authenticate } from "./api/auth"
+import { Toaster, toast } from "react-hot-toast"
 
 
 
 
 export default function Login(){
 
+    type AuthResponse = {      
+        result: {
+          userId: string,
+          user: string,
+          email: string,
+          attribuation: string,
+          loginType: number,
+          nameType: string,
+          accessToken: string
+        }       
+      }
 
     const [showValue, setShowValue] = useState(false)
 
@@ -37,16 +49,18 @@ export default function Login(){
         const res = await Authenticate(auth)
 
         if(!res.success){
-            console.log(res)
-        } 
-        
+            toast.error(res?.errors[0]?.description)       
+        }
+
+        const authValue: AuthResponse = res.result        
+        window.sessionStorage.setItem('auth', btoa(JSON.stringify(authValue)))        
     }
     
     return(     
-        <AuthLayout> 
+        <AuthLayout>           
             <Head>
                 <title>Login</title>
-            </Head>    
+            </Head>  
             <section className="w-3/4 mx-auto flex flex-col gap-10">
                 <div className="title">
                     <h1 className="text-white text-4xl font-bold py-4">Ipal Escalas Portal </h1>
