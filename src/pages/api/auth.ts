@@ -1,6 +1,3 @@
-
-
-
   export async function Authenticate(value: any) {
     const res = await fetch('https://localhost:5001/auth/v1/login', {
       method: 'POST',
@@ -14,8 +11,6 @@
    
     return data;
   }
-
-
 
   export async function UserRegister(value: any){
     const res = await fetch('https://localhost:5001/auth/v1/register', {
