@@ -17,19 +17,7 @@ import { Authenticate } from "./api/auth"
 
 
 
-export default function Login(){
-
-    type AuthResponse = {      
-        result: {
-          userId: string,
-          user: string,
-          email: string,
-          attribuation: string,
-          loginType: number,
-          nameType: string,
-          accessToken: string
-        }       
-      }
+export default function Login(){  
 
     const [showValue, setShowValue] = useState(false)
 
@@ -55,8 +43,7 @@ export default function Login(){
             route.push('/login')
         }
 
-        const authValue: AuthResponse = res.result        
-        window.sessionStorage.setItem('auth', btoa(JSON.stringify(authValue)))
+        window.sessionStorage.setItem('auth', btoa(JSON.stringify(res.result)))
         route.push('/home')     
     }
     

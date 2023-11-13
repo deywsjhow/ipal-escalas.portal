@@ -1,18 +1,20 @@
 .cards_container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between; /* Espaço uniforme entre os cards */
-    margin: -8px; /* Compensação para a margem negativa interna dos cards */
-  }
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start; /* Alinhando à esquerda */
+  max-width: 960px; /* Largura máxima para a centralização */
+  margin: 0 auto; /* Centralizando horizontalmente */
+  overflow-x: auto; /* Adicionando scroll horizontal, se necessário */
+}
 
-  .card_container {
-    flex: 0 0 calc(25% - 16px); /* 25% de largura para 4 cards por linha, considerando a margem interna de 8px em cada lado */
-    margin: 8px; /* Margem interna entre os cards */
-    box-sizing: border-box;
+.card_container {
+  flex: 0 0 calc(50% - 16px); /* 50% de largura para 2 cards por linha, considerando a margem interna de 8px em cada lado */
+  margin: 8px; /* Margem interna entre os cards */
+  box-sizing: border-box;
 
-    border-radius: 12px; /* Adicionando bordas arredondadas */
-    overflow: hidden; /* Certificando-se de que as bordas arredondadas são aplicadas corretamente */
-  }
+  border-radius: 12px; /* Adicionando bordas arredondadas */
+  overflow: hidden; /* Certificando-se de que as bordas arredondadas são aplicadas corretamente */
+}
 
 .cardTable {
     border-collapse: collapse;
