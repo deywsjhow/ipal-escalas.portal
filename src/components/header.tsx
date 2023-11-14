@@ -1,8 +1,9 @@
 import Link from 'next/link';
 import { HiOutlineUserCircle } from 'react-icons/hi';
 import { useState, useEffect } from 'react';
+import { Toaster } from 'react-hot-toast';
 
-import validUserType from '@/lib/validateTypeUser';
+
 
 export default function Header() {
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
@@ -15,11 +16,11 @@ export default function Header() {
 
   useEffect(() => {
     const user = JSON.parse(atob(window.sessionStorage.getItem('auth') || '{}'))
-    setloginType(validUserType(user))
+    setloginType(user.loginType)
   });
 
   return (
-    <header className="bg-blue-900 bg-opacity-75 text-white">
+    <header className="bg-blue-900 bg-opacity-75 text-white">     
       <div className="flex justify-between items-center p-4">
         <div className="flex items-center justify-center h-24 ">
           <a href="/home">
@@ -33,23 +34,23 @@ export default function Header() {
         <nav>
           <ul className="flex space-x-4 items-center">
             <li>
-              <Link href="/perfil">
+              <Link href="/profile">
                 <span className="text-white cursor-pointer">Perfil</span>
               </Link>
             </li>
             <li>
-              <Link href="/trocar-senha">
+              <Link href="/change-password">
                 <span className="text-white cursor-pointer">Trocar Senha</span>
               </Link>
             </li>
             <li>
-              <Link href="/minha-escala">
+              <Link href="/my-scale">
                 <span className="text-white cursor-pointer">Minhas Escalas</span>
               </Link>
             </li>
             {loginType === 1 && (
               <li>
-                <Link href="/monta-escala">
+                <Link href="/build-scale">
                   <span className="text-white cursor-pointer">Add Escalas</span>
                 </Link>
               </li>

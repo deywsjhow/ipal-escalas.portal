@@ -40,7 +40,7 @@ export default function Login(){
 
         if(!res.success){
             toast.error(res?.errors[0]?.description)
-            route.push('/login')
+            return route.push('/login')
         }
 
         window.sessionStorage.setItem('auth', btoa(JSON.stringify(res.result)))

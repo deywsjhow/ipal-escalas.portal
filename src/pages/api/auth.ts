@@ -25,5 +25,20 @@
    
     return data;
   }
+
+  export async function ChangePass(value: any, token: string){
+    const res = await fetch('https://localhost:5001/auth/v1/changepassword', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'bearer '+ token
+      },
+      body: JSON.stringify(value),
+    })
+
+    const data = await res.json()
+       
+    return data;
+  }
     
   

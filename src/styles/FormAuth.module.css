@@ -1,4 +1,3 @@
-
 .input_group{
     @apply flex border rounded-xl;
     position: relative;
@@ -10,10 +9,13 @@
     @apply focus:outline-none border-none;
 }
 
-.button{
-    @apply w-full bg-blue-900 rounded-xl;
+.button {
+    @apply block w-full h-full bg-blue-900 rounded-xl;
     @apply py-3 text-gray-50 text-lg;
-}
+    @apply cursor-pointer;
+    @apply focus:outline-none;
+  }
+  
 
 .button:hover{
     @apply bg-blue-900/75 border-blue-500;

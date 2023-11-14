@@ -7,55 +7,102 @@ import Header from "@/components/header"
 import Card from "@/components/card"
 import { ScalesAnyDate } from "./api/scale";
 import style from '@/styles/ScrollBar.module.css'
+import toast, { Toaster } from "react-hot-toast";
 
 
 
 export default function Home(){
+
+  const [apiData, setApiData] = useState<any>([]);
+  const [token, setToken] = useState<string>('');
+
+  //VALORES CHAMADA PADRÃO - 2 MESES
+  const initialDatesFromHome = {
+      dateScaleInit: format(startOfMonth(new Date()), 'yyyy-MM-dd'),
+      dateScaleFinish: format(endOfMonth(addMonths(new Date(), 1)), 'yyyy-MM-dd')
+  }
     
-    const formik = useFormik({
-        initialValues:{
-            dateScaleInit: "",
-            dateScaleFinish: ""
-        },
-        onSubmit
-    })
-
-    async function onSubmit(values:any) {
-        const dates ={
-            dateScaleInit: values['dateScaleInit'],
-            dateScaleFinish: values['dateScaleFinish']
-        }
-
-        console.log(dates)
-        
-    }
-
-const [apiData, setApiData] = useState<any>([]);
-
-
-
+  const formik = useFormik({
+      initialValues:{
+          dateScaleInit: "",
+          dateScaleFinish: ""
+      },
+      onSubmit
+  }) 
+  
+  //chamada quando abre a tela -- padrão.
   useEffect(() => {
-    const user = JSON.parse(atob(window.sessionStorage.getItem('auth') || '{}'))
-    const token = 'bearer ' + user?.accessToken
+    const fetchData = async () => {
+        const user = JSON.parse(atob(window.sessionStorage.getItem('auth') || '{}'))
+        const token = 'bearer ' + user?.accessToken
+        setToken(token)   
 
-    const formatData = 'yyyy-MM-dd';
-    const valuesDate = {
-        dateScaleInit: format(startOfMonth(new Date()), formatData),
-        dateScaleFinish: format(endOfMonth(addMonths(new Date(), 1)), formatData)
-    }
+        try{
+          const data = await ScalesAnyDate(initialDatesFromHome, token)
 
-   try{
-    const data = ScalesAnyDate(valuesDate, token)
-    data.then((value) => setApiData(value))
-    .catch((error) => console.log(error)) 
-   } catch(error){
-    console.log(error)
-   }
+          if(data != null){
+            setApiData(data)
+          }
+          else
+          {
+            return toast.error("Houve um problema. Faça Login novamente")
+          }
+        } catch(error){
+          console.log(error)
+        }
+    };  
+
+    fetchData();
   }, []); 
+
+  //chamada pelos valores do input
+  async function onSubmit(values:any) {
+
+    const dates ={
+        dateScaleInit: values['dateScaleInit'],
+        dateScaleFinish: values['dateScaleFinish']
+    }
+    // SE OS VALORES DO INPUT ESTIVEREM VAZIOS, RETORNO UM TOAST DE MSG
+    if(dates.dateScaleInit == '')
+      return toast.error("Valor inicial não inserido. Tente novamente!")
+
+    if(dates.dateScaleFinish == '')
+      return toast.error("Valor final não inserido. Tente novamente!")
+    
+    //TUDO CERTO? FAÇO A CHAMADA COM OS VALORES DO INPUT
+    try{
+        const data = await ScalesAnyDate(dates, token)
+
+        if(data != null){
+          setApiData(data)
+        } 
+        else
+        {
+          return toast.error("Houve um problema. Faça Login novamente")
+        }
+      } catch(error){
+        console.log(error)
+      }
+}
 
   return (
     <>
       <Header />
+      <Toaster 
+        position="top-center"
+        toastOptions={{
+            duration: 6000,                          
+            error: {
+                duration: 6000,
+                style: {
+                    background: 'white',
+                    color: 'red',
+                    textAlign: 'left'
+                }
+            }
+
+         }}
+      />
       <div className="flex h-screen bg-white-900">
         <div className="m-auto bg-slate-50 rounded-md w-full h-full flex">
           <div className="lg:w-2/5 h-full p-8">
@@ -103,7 +150,7 @@ const [apiData, setApiData] = useState<any>([]);
                       <Card key={index} data={data} />
                     ))
                   ) : (
-                    <p>Nenhum dado disponível.</p>
+                    <p>Nenhuma escala disponível.</p>
                   )}
                 </div>
               </div>
