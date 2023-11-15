@@ -37,12 +37,7 @@ export default function Header() {
               <Link href="/profile">
                 <span className="text-white cursor-pointer">Perfil</span>
               </Link>
-            </li>
-            <li>
-              <Link href="/change-password">
-                <span className="text-white cursor-pointer">Trocar Senha</span>
-              </Link>
-            </li>
+            </li>            
             <li>
               <Link href="/my-scale">
                 <span className="text-white cursor-pointer">Minhas Escalas</span>
