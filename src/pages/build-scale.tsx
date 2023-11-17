@@ -11,6 +11,7 @@ import toast from 'react-hot-toast';
 import GetSundays from '@/lib/GetSundays';
 
 export default function BuildScale() {
+    
     const [apiData, setApiData] = useState<string[]>([]);
     const [token, setToken] = useState<string>('');
     const initialUserData: ScaleData = {
