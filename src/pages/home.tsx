@@ -106,22 +106,7 @@ export default function Home(){
 
   return (
     <>
-      <Header />
-      <Toaster 
-        position="top-center"
-        toastOptions={{
-            duration: 6000,                          
-            error: {
-                duration: 6000,
-                style: {
-                    background: 'white',
-                    color: 'red',
-                    textAlign: 'left'
-                }
-            }
-
-         }}
-      />
+      <Header />      
       <div className="flex h-screen bg-white-900">
         <div className="m-auto bg-slate-50 rounded-md w-full h-full flex">
           <div className="lg:w-2/5 h-full p-8">
