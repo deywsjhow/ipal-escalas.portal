@@ -2,6 +2,7 @@
 
 .scroll_container::-webkit-scrollbar {
     width: 12px;
+    align-items: center;
   }
   
   .scroll_container::-webkit-scrollbar-track {

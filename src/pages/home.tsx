@@ -113,7 +113,7 @@ export default function Home(){
       <Header />      
       <div className="flex h-screen bg-white-900">
         <div className="m-auto bg-slate-50 rounded-md w-full h-full flex">
-          <div className="lg:w-2/5 h-full p-8">
+          <div className="lg:w-2/5 h-full p-8 items-center">
             <div className="flex flex-col justify-between h-full">
               <div className="text-center py-10">
                 <form onSubmit={formik.handleSubmit} className="mb-8">
