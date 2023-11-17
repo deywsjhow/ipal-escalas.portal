@@ -40,5 +40,12 @@
        
     return data;
   }
-    
+  
+  export async function GetUsers(){
+    const res = await fetch('https://localhost:5001/auth/v1/getusers')   
+
+    const data = await res.json()
+       
+    return data;
+  }
   

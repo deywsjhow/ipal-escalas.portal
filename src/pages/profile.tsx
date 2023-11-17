@@ -25,7 +25,7 @@ export default function Profile(){
             <HiOutlineUserCircle size={150} className="mr-4 left-3" />
           </div>
           <div className="text-center"> 
-            <h1 className="text-3xl font-bold mb-4">Perfil de {user?.user}</h1>
+            <h1 className="text-3xl font-bold mb-4">{user?.user}</h1>
             <p className="mb-2">Email: {user?.email}</p>
             <p className="mb-2">Atribuição: {user?.attribuation}</p>
           </div>
