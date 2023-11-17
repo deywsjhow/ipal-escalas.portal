@@ -9,6 +9,7 @@ import { ScalesAnyDate } from "./api/scale";
 import style from '@/styles/ScrollBar.module.css'
 import toast, { Toaster } from "react-hot-toast";
 import AuthChecker from "@/components/AuthChecker";
+import { date } from "yup";
 
 
 
@@ -87,6 +88,9 @@ export default function Home(){
 
     if(dates.dateScaleFinish == '')
       return toast.error("Valor final não inserido. Tente novamente!")
+
+    if(dates.dateScaleFinish < dates.dateScaleInit)
+      return toast.error("Valor final menor do que o valor inicial!")
     
     //TUDO CERTO? FAÇO A CHAMADA COM OS VALORES DO INPUT
     try{
@@ -106,22 +110,7 @@ export default function Home(){
 
   return (
     <>
-      <Header />
-      <Toaster 
-        position="top-center"
-        toastOptions={{
-            duration: 6000,                          
-            error: {
-                duration: 6000,
-                style: {
-                    background: 'white',
-                    color: 'red',
-                    textAlign: 'left'
-                }
-            }
-
-         }}
-      />
+      <Header />      
       <div className="flex h-screen bg-white-900">
         <div className="m-auto bg-slate-50 rounded-md w-full h-full flex">
           <div className="lg:w-2/5 h-full p-8">
@@ -163,21 +152,27 @@ export default function Home(){
                     </button>
                   </div>
                 </form>  
-                <div className={`${style.scroll_container} overflow-y-auto max-h-[500px] space-y-4`}>
+                <div className={`${style.scroll_container} overflow-y-auto max-h-[500px] space-y-4 grid grid-cols-4 gap-2`}>
                   {Array.isArray(apiData?.resultList) && apiData?.resultList.length > 0 ? (
-                    apiData?.resultList.map((data: any, index: any) => (
+                    apiData?.resultList.slice(0, 4).map((data: any, index: any) => (
                       <Card key={index} data={data} />
                     ))
                   ) : (
                     <p>Nenhuma escala disponível.</p>
-                  )}
+                  )}                  
+                </div>
+                <div className={`${style.scroll_container} overflow-y-auto max-h-[500px] space-y-4 grid grid-cols-2 gap-6`}>
+                  {Array.isArray(apiData?.resultList) && apiData?.resultList.length > 0 ? (
+                    apiData?.resultList.slice(4, 8).map((data: any, index: any) => (
+                      <Card key={index} data={data} />
+                    ))
+                  ) : (
+                    <p>Nenhuma escala disponível.</p>
+                  )}                  
                 </div>
               </div>
             </div>
-          </div>
-          <div className="lg:w-3/5 flex items-center justify-center">
-            <h2>Data</h2>
-          </div>
+          </div>          
         </div>
       </div>
     </>

@@ -8,7 +8,7 @@
 }
 
 .card_container {
-  flex: 0 0 calc(50% - 16px); /* 50% de largura para 2 cards por linha, considerando a margem interna de 8px em cada lado */
+  flex: 0 0 calc(25% - 16px); /* 50% de largura para 2 cards por linha, considerando a margem interna de 8px em cada lado */
   margin: 8px; /* Margem interna entre os cards */
   box-sizing: border-box;
 
