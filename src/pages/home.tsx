@@ -152,27 +152,21 @@ export default function Home(){
                     </button>
                   </div>
                 </form>  
-                <div className={`${style.scroll_container} overflow-y-auto max-h-[500px] space-y-4 grid grid-cols-4 gap-2`}>
+                <div className={`${style.scroll_container} overflow-y-auto max-h-[500px] space-y-4`}>
                   {Array.isArray(apiData?.resultList) && apiData?.resultList.length > 0 ? (
-                    apiData?.resultList.slice(0, 4).map((data: any, index: any) => (
+                    apiData?.resultList.map((data: any, index: any) => (
                       <Card key={index} data={data} />
                     ))
                   ) : (
                     <p>Nenhuma escala disponível.</p>
                   )}                  
-                </div>
-                <div className={`${style.scroll_container} overflow-y-auto max-h-[500px] space-y-4 grid grid-cols-2 gap-6`}>
-                  {Array.isArray(apiData?.resultList) && apiData?.resultList.length > 0 ? (
-                    apiData?.resultList.slice(4, 8).map((data: any, index: any) => (
-                      <Card key={index} data={data} />
-                    ))
-                  ) : (
-                    <p>Nenhuma escala disponível.</p>
-                  )}                  
-                </div>
+                </div>                       
               </div>
             </div>
-          </div>          
+          </div>
+          <div className="lg:w-3/5 flex items-center justify-center">
+                  <h2>Data</h2>
+                </div>                                   
         </div>
       </div>
     </>
