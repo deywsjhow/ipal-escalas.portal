@@ -7,10 +7,8 @@ import Header from "@/components/header"
 import Card from "@/components/card"
 import { ScalesAnyDate } from "./api/scale";
 import style from '@/styles/ScrollBar.module.css'
-import toast, { Toaster } from "react-hot-toast";
-import AuthChecker from "@/components/AuthChecker";
-import { date } from "yup";
-
+import toast from "react-hot-toast";
+import { GetSundays2MonthsNoReactSelect } from "@/lib/GetSundays";
 
 
 export default function Home(){
@@ -18,10 +16,12 @@ export default function Home(){
   const [apiData, setApiData] = useState<any>([]);
   const [token, setToken] = useState<string>('');
 
+  const dates = GetSundays2MonthsNoReactSelect();
+
   //VALORES CHAMADA PADRÃO - 2 MESES
   const initialDatesFromHome = {
-      dateScaleInit: format(startOfMonth(new Date()), 'yyyy-MM-dd'),
-      dateScaleFinish: format(endOfMonth(addMonths(new Date(), 1)), 'yyyy-MM-dd')
+      dateScaleInit: dates.start,
+      dateScaleFinish: dates.end
   }
     
   const formik = useFormik({
@@ -36,40 +36,29 @@ export default function Home(){
   useEffect(() => {
     const fetchData = async () => {
         const user = JSON.parse(atob(window.sessionStorage.getItem('auth') || '{}'))
-        const token = 'bearer ' + user?.accessToken
+        const token = user?.accessToken
         setToken(token)
 
-        const tokens = user?.accessToken;
-
       // Divida o token nas suas três partes: cabeçalho, payload e assinatura
-        const [header, payload, signature] = tokens.split('.');
+        const [header, payload, signature] = token.split('.');
 
       // Decodifique o payload (parte do meio, índice 1)
       const decodedPayload = JSON.parse(atob(payload));
 
-      // Valor do tempo de expiração do seu token JWT
-      const exp = decodedPayload.exp; 
-      // Crie um novo objeto Date com base no tempo de expiração (em milissegundos)
-
-      const expirationDate = new Date(exp * 1000);
-
-      localStorage.setItem('tokenExpiration', String(exp))
-
-      
+      localStorage.setItem('tokenExpiration', String(decodedPayload.exp))      
         
-        try{
-          const data = await ScalesAnyDate(initialDatesFromHome, token)
-
-          if(data != null){
-            setApiData(data)
-          }
-          else
-          {
-            return toast.error("Houve um problema. Faça Login novamente")
-          }
-        } catch(error){
-          console.log(error)
+      try{
+        const data = await ScalesAnyDate(initialDatesFromHome, token)
+        if(data != null){
+          setApiData(data)
         }
+        else
+        {
+          return toast.error("Houve um problema. Faça Login novamente")
+        }
+      } catch(error){
+        console.log(error)
+      }
     };  
 
     fetchData();

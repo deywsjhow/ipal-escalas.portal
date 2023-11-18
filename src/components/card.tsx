@@ -4,7 +4,7 @@ import style from '@/styles/Card.module.css';
 export default function Card(data: any) {
   return (
     <div className={`${style.card_container}`}>
-      <h2 className="text-lg font-bold text-center">Escala do dia: {data?.data.dateScale}</h2>
+      <h2 className="text-lg font-bold text-center">Escala do dia: {data?.data.dateScale}</h2> <br />
       <div>
         <table className={style.cardTable}>
           <tbody>

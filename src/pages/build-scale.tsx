@@ -8,7 +8,7 @@ import { GetUsers } from './api/auth';
 import ScaleData from '@/Models/ScaleData';
 import Header from '@/components/header';
 import toast from 'react-hot-toast';
-import GetSundays from '@/lib/GetSundays';
+import { GetSundaysFormReactSelect } from '@/lib/GetSundays';
 
 export default function BuildScale() {
     
@@ -41,7 +41,7 @@ export default function BuildScale() {
         fetchData();
     }, []);
     
-    const sundayOptions = GetSundays(); // domingos do mês vigente + 2 meses para frente    
+    const sundayOptions = GetSundaysFormReactSelect(); // domingos do mês vigente + 2 meses para frente    
     const selectId = useId();    
    
     return (
@@ -50,29 +50,24 @@ export default function BuildScale() {
             <div className="flex items-center justify-center h-full">
                 <div className="w-3/4 h-70 bg-gray-100 rounded border border-t-2 border-b-4 border-gray-300 shadow p-6">
                     <h1 className="text-4xl font-bold text-center mb-4">Montar Escala</h1>
-                    <Formik
-                        initialValues={initialUserData}
-                        onSubmit={async (values, { resetForm }) =>{
-                            if (values.managerName == null || values.managerName == '' ||
-                                values.dateScale == null   || values.dateScale == ''){
-                                    toast.error('Não foi inserido o dirigente ou dia da escala')
-                                } else{
-
-                                    const data = await RegiterScale(values, token)
-                                    if (data.success){
-                                        resetForm();
-                                        toast.success('Escala criada com sucesso!')
-                                    } else{
-                                        resetForm();
-                                        toast.error(data.errors[0]?.description)
-                                    }
-                                }
-                                 
-                            
-                                 console.log(values)
-                            
-                        }}
-                    >
+                        <Formik
+                            initialValues={initialUserData}
+                            onSubmit={async (values, { resetForm }) =>{
+                                if (values.managerName == null || values.managerName == '' ||
+                                    values.dateScale == null   || values.dateScale == ''){
+                                        toast.error('Não foi inserido o dirigente ou dia da escala')
+                                    } else{                                    
+                                        const data = await RegiterScale(values, token)
+                                        if (data.success){
+                                            resetForm();
+                                            toast.success('Escala criada com sucesso!')
+                                        } else{
+                                            resetForm();
+                                            toast.error(data.errors[0]?.description)
+                                        }
+                                    }                                
+                            }}
+                        >
                         <Form className="space-y-4">
                             <div className='flex justify-center'>
                                 <Field name='dateScale'>

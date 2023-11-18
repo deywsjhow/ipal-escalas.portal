@@ -3,7 +3,7 @@ export async function ScalesAnyDate(value: any, token: string) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': token
+        'Authorization': 'bearer ' + token
       },
       body: JSON.stringify(value),
     })
