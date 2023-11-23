@@ -154,8 +154,8 @@ export default function Home(){
             </div>
           </div>
           <div className="lg:w-3/5 flex items-center justify-center">
-                  <h2>Data</h2>
-                </div>                                   
+             <h2>Data</h2>
+          </div>                                   
         </div>
       </div>
     </>
